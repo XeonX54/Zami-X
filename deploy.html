@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZAMI-MD | Deploy Bot</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--pink:#ff3fc8;--purple:#a855f7;--cyan:#22d3ee;--ok:#18c964}
+body{font-family:'Poppins',sans-serif;background:#08040d;color:#fff;min-height:100vh;
+  padding:18px 14px 50px;overflow-x:hidden;position:relative}
+body::before{content:"";position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(circle at 15% 8%,rgba(150,20,110,.35),transparent 45%),
+             radial-gradient(circle at 85% 85%,rgba(80,25,150,.35),transparent 45%),
+             linear-gradient(#0e0617,#08040d)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;
+  background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:70px 70px}
+.wrap{max-width:420px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.hbtn{display:inline-flex;align-items:center;gap:8px;background:rgba(32,18,44,.85);
+  border:1px solid rgba(255,255,255,.08);padding:8px 16px;border-radius:40px;color:#fff;
+  text-decoration:none;font-weight:600;font-size:13px;cursor:pointer}
+.hbtn i{color:var(--pink)}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(24,201,100,.5);
+  border-radius:30px;padding:6px 14px;color:#6ff0a8;font-size:11px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;background:rgba(24,201,100,.07)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 6px var(--ok)}
+.hero{text-align:center;margin:20px 0 22px}
+.hero h1{font-family:'Orbitron';font-size:27px;line-height:1.2;
+  background:linear-gradient(90deg,#a855f7,#5b9dff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#9b93a8;font-size:13px;margin-top:10px;line-height:1.6}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.chip{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);border-radius:30px;
+  padding:6px 13px;color:#ddd6e6;font-size:11px}
+.chip i{color:var(--pink);margin-right:5px}
+.card{position:relative;overflow:hidden;border-radius:20px;padding:22px 18px 18px;margin-bottom:16px;
+  background:linear-gradient(160deg,rgba(30,15,42,.95),rgba(15,8,23,.96));
+  border:1px solid rgba(255,255,255,.07);box-shadow:0 30px 70px rgba(0,0,0,.65)}
+.ribbon{position:absolute;top:13px;right:-36px;width:130px;transform:rotate(45deg);
+  background:linear-gradient(90deg,#b23bff,#ff2bb0);color:#fff;text-align:center;
+  font-weight:800;font-size:10px;letter-spacing:2px;padding:5px 0}
+.head{display:flex;align-items:center;gap:14px}
+.ava-wrap{position:relative;width:64px;height:64px;flex:0 0 auto}
+.ava-wrap::before{content:"";position:absolute;inset:-2px;border-radius:18px;
+  background:conic-gradient(#ff2bd1,#8a2be2,#00e5ff,#ff2bd1);filter:blur(5px);opacity:.85;
+  animation:spin 4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ava{position:relative;width:64px;height:64px;border-radius:15px;border:2px solid var(--pink);
+  object-fit:cover;background:#1a0f22}
+.brand{font-family:'Orbitron';font-size:21px;font-weight:900;
+  background:linear-gradient(90deg,#ff2bd1,#ff9a2b,#ffe74c,#2bff88,#22d3ee,#a855f7,#ff2bd1);
+  background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:rain 16s linear infinite}
+@keyframes rain{to{background-position:300% 0}}
+.sub{font-family:'Share Tech Mono';letter-spacing:1px;color:#9b93a8;font-size:11px;
+  display:flex;align-items:center;gap:6px;margin-top:3px}
+.tag-pro{margin-left:auto;background:linear-gradient(90deg,#f6b21b,#ffdd70);color:#3a2600;
+  font-size:10px;font-weight:900;padding:4px 10px;border-radius:20px}
+.sec{display:flex;align-items:center;gap:8px;margin:20px 0 12px;color:#ff8ee4;font-weight:700;
+  letter-spacing:1.5px;font-size:11px;text-transform:uppercase}
+.sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(255,63,200,.5),transparent)}
+label{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:#ddd6e6;margin-bottom:7px}
+label i{color:var(--pink)}
+input,select,textarea{width:100%;background:rgba(10,5,16,.85);border:1px solid rgba(255,255,255,.09);
+  border-radius:12px;padding:12px 14px;color:#fff;font-size:14px;font-family:'Poppins';outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,63,200,.13)}
+textarea{resize:vertical;min-height:80px;font-family:'Share Tech Mono';font-size:12px}
+.hint{font-size:10.5px;color:#7c7488;margin:6px 0 14px}
+.hint a{color:var(--pink);text-decoration:none}
+.ok-msg{font-size:11px;color:#6ff0a8;margin:6px 0 14px;display:none}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.toggle{display:flex;align-items:center;justify-content:space-between;
+  background:rgba(10,5,16,.7);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:11px 14px;margin-bottom:11px}
+.toggle span{font-size:12.5px;font-weight:600}
+.toggle span i{color:var(--pink);margin-right:7px}
+.sw{position:relative;width:44px;height:24px;flex:0 0 auto}
+.sw input{opacity:0;width:0;height:0;position:absolute}
+.sl{position:absolute;inset:0;background:#2d2438;border-radius:30px;cursor:pointer;transition:.25s}
+.sl::before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;
+  border-radius:50%;transition:.25s}
+.sw input:checked + .sl{background:linear-gradient(90deg,#ff2bb0,#b23bff)}
+.sw input:checked + .sl::before{transform:translateX(20px)}
+.btn{width:100%;border:none;cursor:pointer;font-size:15px;font-weight:700;padding:14px;
+  border-radius:13px;display:flex;align-items:center;justify-content:center;gap:9px;color:#fff;
+  background:linear-gradient(90deg,#ff2bb0,#b23bff);box-shadow:0 12px 34px rgba(255,43,176,.4);
+  transition:.2s;margin-top:6px}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.6}
+.btn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);box-shadow:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:16px}
+.stat{background:linear-gradient(160deg,rgba(30,15,42,.9),rgba(15,8,23,.95));
+  border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px 8px;text-align:center}
+.stat b{display:block;font-family:'Orbitron';font-size:14px;color:var(--pink)}
+.stat small{font-size:10px;color:#8d8598}
+.steps{counter-reset:s}
+.step{display:flex;gap:12px;padding:11px 0;border-bottom:1px dashed rgba(255,255,255,.07)}
+.step:last-child{border:none}
+.num{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(90deg,#ff2bb0,#b23bff);font-size:12px;font-weight:800}
+.step b{font-size:13px;display:block}
+.step small{font-size:11px;color:#8d8598}
+.warn{background:rgba(246,178,27,.08);border:1px solid rgba(246,178,27,.35);border-radius:14px;
+  padding:13px;font-size:11.5px;color:#ffd98a;line-height:1.6}
+.warn b{color:#ffc14d;display:block;margin-bottom:4px}
+.feat{display:flex;flex-wrap:wrap;gap:7px}
+.feat span{border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 11px;font-size:11px;color:#ddd6e6}
+.feat i{color:var(--purple);margin-right:5px}
+.prev-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.07);font-size:12px}
+.prev-row:last-child{border:none}
+.prev-row span:first-child{color:#8d8598}
+.prev-row b{color:var(--pink);font-family:'Share Tech Mono'}
+#logbox{display:none;margin-top:14px;background:#05030a;border:1px solid rgba(255,63,200,.3);
+  border-radius:12px;padding:12px;max-height:230px;overflow:auto;
+  font-family:'Share Tech Mono';font-size:11px;line-height:1.7;color:#9df7c4;white-space:pre-wrap}
+.foot{text-align:center;margin-top:22px;color:#8d8598;font-size:12px}
+.foot b{color:var(--pink)}
+.divider{display:flex;align-items:center;gap:14px;margin:22px 0 6px}
+.divider .ln{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,63,200,.55),transparent)}
+.rainbow{font-family:'Dancing Script',cursive;font-size:26px;font-weight:700;
+  background:linear-gradient(90deg,#ff2bd1,#ff9a2b,#ffe74c,#2bff88,#22d3ee,#a855f7,#ff2bd1);
+  background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:rain 16s linear infinite}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="hbtn" href="./index.html"><i class="fa-solid fa-arrow-left"></i> Home</a>
+    <span class="pill"><span class="dot"></span> System Online</span>
+  </div>
+
+  <div class="hero">
+    <h1>Deploy Your<br>WhatsApp Bot</h1>
+    <p>Next-gen multi-device bot — instant deploy,<br>zero setup, runs 24/7 in the cloud.</p>
+    <div class="chips">
+      <span class="chip"><i class="fa-solid fa-bolt"></i>Instant Deploy</span>
+      <span class="chip"><i class="fa-solid fa-shield-halved"></i>Secure</span>
+      <span class="chip"><i class="fa-solid fa-infinity"></i>Free Forever</span>
+      <span class="chip"><i class="fa-solid fa-clock"></i>24/7 Uptime</span>
+    </div>
+  </div>
+
+  <!-- ══ FORM CARD ══ -->
+  <div class="card">
+    <div class="ribbon">PREMIUM</div>
+    <div class="head">
+      <div class="ava-wrap"><img class="ava" src="https://files.catbox.moe/c30xpp.jpg" alt="ZAMI"></div>
+      <div>
+        <div class="brand">ZAMI-MD</div>
+        <div class="sub"><span class="dot"></span>All Systems Operational</div>
+      </div>
+      <span class="tag-pro">PRO</span>
+    </div>
+
+    <div class="sec"><i class="fa-solid fa-key"></i> Access Credentials</div>
+
+    <label><i class="fa-brands fa-github"></i> GitHub Username</label>
+    <input id="gh" placeholder="your-username">
+    <div class="ok-msg" id="ghOk"><i class="fa-solid fa-circle-check"></i> Fork verified successfully!</div>
+    <div class="hint">Must have forked ZAMI-MD repo. <a href="#" target="_blank">Fork now →</a></div>
+
+    <label><i class="fa-solid fa-id-badge"></i> Session ID</label>
+    <textarea id="sid" placeholder="ZAMI~xxxxxxxxxxxxxxxx..."></textarea>
+    <div class="hint">Get it from <a href="./index.html">Pair Code page</a></div>
+
+    <div class="sec"><i class="fa-solid fa-palette"></i> Bot Appearance</div>
+
+    <label><i class="fa-solid fa-terminal"></i> Command Prefix</label>
+    <input id="prefix" value="." maxlength="3">
+    <div class="hint">Prefix for all commands — e.g. .alive, .ping</div>
+
+    <label><i class="fa-solid fa-user"></i> Bot Name</label>
+    <input id="bname" value="ZAMI-MD">
+    <div class="hint">Displayed in bot replies.</div>
+
+    <label><i class="fa-solid fa-image"></i> Bot Profile Picture</label>
+    <input id="pfp" placeholder="https://...jpg">
+    <div class="hint">Custom bot avatar URL (optional).</div>
+
+    <div class="sec"><i class="fa-solid fa-sliders"></i> Bot Behavior</div>
+
+    <div class="row">
+      <div>
+        <label><i class="fa-solid fa-globe"></i> Time Zone</label>
+        <select id="tz">
+          <option>Asia/Karachi</option><option>Asia/Kolkata</option>
+          <option>Asia/Dhaka</option><option>Asia/Dubai</option>
+          <option>Europe/London</option><option>America/New_York</option>
+        </select>
+      </div>
+      <div>
+        <label><i class="fa-solid fa-circle-half-stroke"></i> Presence</label>
+        <select id="pres">
+          <option value="unavailable">Offline</option>
+          <option value="available">Online</option>
+          <option value="composing">Typing</option>
+          <option value="recording">Recording</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="sec"><i class="fa-solid fa-wand-magic-sparkles"></i> Status Automation</div>
+
+    <div class="toggle"><span><i class="fa-solid fa-heart"></i>Auto Like Status</span>
+      <label class="sw"><input type="checkbox" id="alike" checked><span class="sl"></span></label></div>
+    <div class="toggle"><span><i class="fa-solid fa-eye"></i>Auto Read Status</span>
+      <label class="sw"><input type="checkbox" id="aread" checked><span class="sl"></span></label></div>
+    <div class="toggle"><span><i class="fa-solid fa-phone-slash"></i>Anti Call</span>
+      <label class="sw"><input type="checkbox" id="acall" checked><span class="sl"></span></label></div>
+    <div class="toggle"><span><i class="fa-solid fa-link-slash"></i>Anti Link</span>
+      <label class="sw"><input type="checkbox" id="alink"><span class="sl"></span></label></div>
+    <div class="toggle"><span><i class="fa-solid fa-robot"></i>Always Online</span>
+      <label class="sw"><input type="checkbox" id="aonline"><span class="sl"></span></label></div>
+
+    <button class="btn" id="go" onclick="deploy()"><i class="fa-solid fa-rocket"></i> Deploy Bot</button>
+    <button class="btn btn-ghost" onclick="checkStatus()" style="margin-top:9px"><i class="fa-solid fa-heart-pulse"></i> Check Status</button>
+
+    <div id="logbox"></div>
+  </div>
+
+  <!-- ══ STATS ══ -->
+  <div class="stats">
+    <div class="stat"><b>FAST</b><small>Deploy</small></div>
+    <div class="stat"><b>SECURE</b><small>Session</small></div>
+    <div class="stat"><b>FREE</b><small>Forever</small></div>
+  </div>
+
+  <!-- ══ HOW IT WORKS ══ -->
+  <div class="card">
+    <div class="sec" style="margin-top:0"><i class="fa-solid fa-list-check"></i> How It Works</div>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><div><b>Fork the Repo</b><small>Clone ZAMI-MD to your GitHub account</small></div></div>
+      <div class="step"><div class="num">2</div><div><b>Get Session ID</b><small>Pair WhatsApp via Pair Code page</small></div></div>
+      <div class="step"><div class="num">3</div><div><b>Fill the Form</b><small>Enter your bot preferences</small></div></div>
+      <div class="step"><div class="num">4</div><div><b>Deploy!</b><small>Bot goes live instantly</small></div></div>
+    </div>
+  </div>
+
+  <div class="warn" style="margin-bottom:16px">
+    <b><i class="fa-solid fa-triangle-exclamation"></i> Keep Session Safe</b>
+    Never share your Session ID — it grants full access to your WhatsApp account.
+  </div>
+
+  <!-- ══ FEATURES ══ -->
+  <div class="card">
+    <div class="sec" style="margin-top:0"><i class="fa-solid fa-gift"></i> What You Get</div>
+    <div class="feat">
+      <span><i class="fa-solid fa-mobile-screen"></i>Multi-Device</span>
+      <span><i class="fa-solid fa-brain"></i>AI Replies</span>
+      <span><i class="fa-solid fa-users-gear"></i>Group Admin</span>
+      <span><i class="fa-solid fa-photo-film"></i>Media Tools</span>
+      <span><i class="fa-solid fa-circle-notch"></i>Auto Status</span>
+      <span><i class="fa-solid fa-phone-slash"></i>Anti-Call</span>
+      <span><i class="fa-solid fa-note-sticky"></i>Sticker Maker</span>
+      <span><i class="fa-solid fa-download"></i>Downloader</span>
+      <span><i class="fa-solid fa-link-slash"></i>Anti-Link</span>
+      <span><i class="fa-solid fa-hand"></i>Welcome Msg</span>
+    </div>
+  </div>
+
+  <!-- ══ LIVE PREVIEW ══ -->
+  <div class="card">
+    <div class="sec" style="margin-top:0"><i class="fa-solid fa-eye"></i> Live Preview</div>
+    <div class="prev-row"><span>Prefix</span><b id="pv-prefix">.</b></div>
+    <div class="prev-row"><span>Bot Name</span><b id="pv-name">ZAMI-MD</b></div>
+    <div class="prev-row"><span>Time Zone</span><b id="pv-tz">Karachi</b></div>
+    <div class="prev-row"><span>Presence</span><b id="pv-pres">Offline</b></div>
+    <div class="prev-row"><span>Auto Like</span><b id="pv-alike">ON</b></div>
+    <div class="prev-row"><span>Auto Read</span><b id="pv-aread">ON</b></div>
+  </div>
+
+  <div class="divider"><span class="ln"></span><b class="rainbow">ZAMI</b><span class="ln"></span></div>
+  <div class="foot">👑 MADE BY <b>ZAMI</b> · © 2026 ZAM1-MD 💗</div>
+</div>
+
+<script>
+const API = "";   // same server
+
+/* live preview */
+const bind = (id, out, fn = v => v) => {
+  const e = document.getElementById(id), o = document.getElementById(out);
+  const up = () => o.textContent = fn(e.type === 'checkbox' ? e.checked : e.value);
+  e.addEventListener('input', up); e.addEventListener('change', up); up();
+};
+bind('prefix','pv-prefix', v => v || '.');
+bind('bname','pv-name', v => v || 'ZAMI-MD');
+bind('tz','pv-tz', v => v.split('/')[1]);
+bind('pres','pv-pres', v => ({unavailable:'Offline',available:'Online',composing:'Typing',recording:'Recording'})[v]);
+bind('alike','pv-alike', v => v ? 'ON' : 'OFF');
+bind('aread','pv-aread', v => v ? 'ON' : 'OFF');
+
+document.getElementById('gh').addEventListener('blur', e => {
+  document.getElementById('ghOk').style.display = e.target.value.trim() ? 'block' : 'none';
+});
+
+const box = document.getElementById('logbox');
+function plog(t, c) {
+  box.style.display = 'block';
+  box.innerHTML += `<div style="color:${c||'#9df7c4'}">${t}</div>`;
+  box.scrollTop = box.scrollHeight;
+}
+
+async function deploy() {
+  const cfg = {
+    github:  document.getElementById('gh').value.trim(),
+    session: document.getElementById('sid').value.trim(),
+    prefix:  document.getElementById('prefix').value.trim() || '.',
+    botName: document.getElementById('bname').value.trim() || 'ZAMI-MD',
+    pfp:     document.getElementById('pfp').value.trim(),
+    tz:      document.getElementById('tz').value,
+    presence:document.getElementById('pres').value,
+    autoLike:  document.getElementById('alike').checked,
+    autoRead:  document.getElementById('aread').checked,
+    antiCall:  document.getElementById('acall').checked,
+    antiLink:  document.getElementById('alink').checked,
+    alwaysOnline: document.getElementById('aonline').checked
+  };
+
+  if (!cfg.session.startsWith('ZAMI~')) { alert('Valid Session ID daalo (ZAMI~ se shuru hoti hai)'); return; }
+
+  const btn = document.getElementById('go');
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Deploying...';
+  box.innerHTML = '';
+  plog('▸ Deployment shuru...', '#ffd98a');
+
+  try {
+    const r = await fetch(API + '/api/deploy', {
+      method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(cfg)
+    });
+    const d = await r.json();
+    (d.logs || []).forEach(l => plog('  ' + l));
+    if (d.ok) {
+      plog('✅ BOT LIVE! · id: ' + d.id, '#6ff0a8');
+      btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Deployed ✅';
+    } else {
+      plog('❌ ' + (d.error || 'Deploy fail'), '#ff8080');
+      btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-rocket"></i> Deploy Bot';
+    }
+  } catch (e) {
+    plog('❌ Server offline — npm start chalao', '#ff8080');
+    btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-rocket"></i> Deploy Bot';
+  }
+}
+
+async function checkStatus() {
+  box.innerHTML = '';
+  plog('▸ Status check...', '#ffd98a');
+  try {
+    const d = await (await fetch(API + '/api/bots')).json();
+    if (!d.bots?.length) return plog('  Koi bot deploy nahi hai', '#8d8598');
+    d.bots.forEach(b => plog(`  ${b.running?'🟢':'🔴'} ${b.id} · ${b.botName} · ${b.status}`));
+  } catch { plog('❌ Server offline', '#ff8080'); }
+}
+</script>
+</body>
+</html>

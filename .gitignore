@@ -1,0 +1,9 @@
+node_modules/
+sessions/
+store/
+deployments/
+bot_session/
+bots.json
+*.log
+.env
+package-lock.json
